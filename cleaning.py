@@ -15,13 +15,15 @@ def stem_phrase(phrase):
 
 # you can add if you find some additional fix or cleaning
 def clean_text(phrase):
-    phrase = phrase.replace("n't", "not")
+    phrase = phrase.replace("n't", " not")
     phrase = phrase.replace("it's", "it is")
+    phrase = phrase.replace("'v", " have")
     return phrase
 
 
 def cleaning(data):
     data.dropna()
-    tqdm.pandas(desc="Stemming...(train)")
+    tqdm.pandas(desc="Stemming...")
     data['text'] = data['text'].progress_apply(stem_phrase)
+    data['text'] = data['text'].progress_apply(clean_text)
     return data
