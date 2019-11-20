@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.utils.rnn as rnn
 from torch.utils.data import Dataset, DataLoader, TensorDataset, random_split
+from sklearn.model_selection import train_test_split
 
 
 basedir = os.path.dirname(os.path.realpath(__file__))

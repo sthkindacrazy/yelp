@@ -34,7 +34,7 @@ def cleaning(data):
 
 # easy one hot encoding
 def phrase_one_hot_encode(data, num=30000):
-    vectorizer = CountVectorizer(max_features=num, min_df=1, ngram_range=(1, 2))
+    vectorizer = CountVectorizer(max_features=num, min_df=1, ngram_range=(1, 2), binary=True)
     vectorizer.fit(data['text'])
     return vectorizer.transform(data['text'])
 
