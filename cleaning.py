@@ -36,7 +36,7 @@ def cleaning(data):
 def phrase_one_hot_encode(train_data, test_data, num=30000):
     vectorizer = CountVectorizer(max_features=num, min_df=1, ngram_range=(1, 2), binary=True)
     vectorizer.fit(train_data['text'])
-    return vectorizer.transform(train_data['text']),vectorizer.transform(test_data['text'])
+    return vectorizer.transform(train_data['text']), vectorizer.transform(test_data['text'])
 
 
 def phrase_tf_idf_encode(data, num=30000):

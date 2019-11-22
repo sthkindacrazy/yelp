@@ -5,13 +5,12 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix, accuracy_score, roc_auc_score, roc_curve
 import data_loader as dl
 import cleaning as cl
-import torch
-import torch.nn as nn
-import torch.nn.utils.rnn as rnn
-from torch.utils.data import Dataset, DataLoader, TensorDataset, random_split
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
+from sklearn.feature_extraction.text import CountVectorizer
+import mglearn
 
 
 train_data = dl.load_clean_data('train')
@@ -41,6 +40,39 @@ def multinomial_bayes():
     plt.xlabel('number of words')
     plt.ylabel('classification accuracy')
     plt.show()
+
+
+def logistic():
+    x_train_ref_org, x_test_ref_org, y_train_ref, y_test_ref = train_test_split(x_train, y_train, test_size=0.2,
+                                                                                random_state=42)
+    vectorizer = CountVectorizer(max_features=10000, min_df=1, ngram_range=(1, 2))
+    vectorizer.fit(x_train_ref_org['text'])
+
+    x_train_ref =vectorizer.transform(x_train_ref_org['text'])
+    x_test_ref = vectorizer.transform(x_test_ref_org['text'])
+
+    #print("Vocabulary size: {}".format(len(vect.vocabulary_)))
+    #print("X_train:\n{}".format(repr(X_train)))
+    #print("X_test: \n{}".format(repr(X_test)))
+
+    feature_names = vectorizer.get_feature_names()
+    print("Number of features: {}".format(len(feature_names)))
+
+    param_grid = {'C': [0.001, 0.01, 0.1, 1, 10]}
+    grid = GridSearchCV(LogisticRegression(), param_grid, cv=5)
+    grid.fit(x_train_ref, y_train_ref)
+
+    print("Best cross-validation score: {:.2f}".format(grid.best_score_))
+    print("Best parameters: ", grid.best_params_)
+    print("Best estimator: ", grid.best_estimator_)
+
+    mglearn.tools.visualize_coefficients(grid.best_estimator_.coef_, feature_names, n_top_features=25)
+    plt.show()
+
+    lr = grid.best_estimator_
+    lr.predict(x_test_ref)
+    print("Score: {:.2f}".format(lr.score(x_test_ref, y_test_ref)))
+
 
 
 
