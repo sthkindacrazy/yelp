@@ -51,10 +51,6 @@ def logistic():
     x_train_ref =vectorizer.transform(x_train_ref_org['text'])
     x_test_ref = vectorizer.transform(x_test_ref_org['text'])
 
-    #print("Vocabulary size: {}".format(len(vect.vocabulary_)))
-    #print("X_train:\n{}".format(repr(X_train)))
-    #print("X_test: \n{}".format(repr(X_test)))
-
     feature_names = vectorizer.get_feature_names()
     print("Number of features: {}".format(len(feature_names)))
 
@@ -65,9 +61,6 @@ def logistic():
     print("Best cross-validation score: {:.2f}".format(grid.best_score_))
     print("Best parameters: ", grid.best_params_)
     print("Best estimator: ", grid.best_estimator_)
-
-    mglearn.tools.visualize_coefficients(grid.best_estimator_.coef_, feature_names, n_top_features=25)
-    plt.show()
 
     lr = grid.best_estimator_
     lr.predict(x_test_ref)
