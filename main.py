@@ -30,8 +30,7 @@ def multinomial_bayes():
         x_test_ref = x_test_ref_org
         #x_train_ref = cl.phrase_tf_idf_encode(x_train_ref, i)
         #x_test_ref = cl.phrase_tf_idf_encode(x_test_ref, i)
-        x_train_ref = cl.phrase_one_hot_encode(x_train_ref, i)
-        x_test_ref = cl.phrase_one_hot_encode(x_test_ref, i)
+        x_train_ref, x_test_ref = cl.phrase_one_hot_encode(x_train_ref, x_test_ref, i)
         mnb.fit(x_train_ref, y_train_ref)
         predmnb = mnb.predict(x_test_ref)
         score = round(accuracy_score(y_test_ref, predmnb) * 100, 2)
