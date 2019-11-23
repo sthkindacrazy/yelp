@@ -7,6 +7,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize 
 import re
 
+nltk.download()
 stop_words = set(stopwords.words('english'))
 stemmer = SnowballStemmer('english')
 
