@@ -10,13 +10,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
 import mglearn
 
-#### let's standadize the extraction process for our project here
+# load the data in just the same procesude as before
 train_data = dl.load_clean_data('train')
-x_train, y_train = (train_data[0], train_data[-1]) 
-x_train_cl = cl.rm_stopwords(x_train)  #### use x_train_cl["cln_split_text"] to call the cleaned review
+x_tem, y_tem = (train_data[0], train_data[-1]) 
 
+#remove all the punctuations and stop words (special repeated char like "``" still remains for now)
+x_train_cl = cl.rm_stopwords(x_tem)    # use x_train_cl["cln_split_text"] to call the cleaned review
+x_train, x_test,y_train, y_test = train_test_split(x_train_cl,y_tem,test_size=0.2,random_state=42,shuffle=True) # we can swtich "42" to "RandomState" later 
 
 
 def multinomial_bayes():
