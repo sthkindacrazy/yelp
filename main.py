@@ -21,6 +21,8 @@ x_tem, y_tem = (train_data[0], train_data[-1])
 x_train_cl = cl.rm_stopwords(x_tem)    # use x_train_cl["cln_split_text"] to call the cleaned review
 x_train, x_test,y_train, y_test = train_test_split(x_train_cl,y_tem,test_size=0.2,random_state=42,shuffle=True) # we can swtich "42" to "RandomState" later 
 
+#####
+#####Just the part of the code above same for all three of us to maintain an identical initialization of review text
 
 def multinomial_bayes():
     x_train_ref_org, x_test_ref_org, y_train_ref, y_test_ref = train_test_split(x_train, y_train, test_size=0.2, random_state=42)
