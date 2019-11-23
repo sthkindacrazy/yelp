@@ -5,6 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize 
+import re
 
 stop_words = set(stopwords.words('english'))
 stemmer = SnowballStemmer('english')
