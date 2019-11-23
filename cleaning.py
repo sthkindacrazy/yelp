@@ -51,26 +51,27 @@ def phrase_tf_idf_encode(data, num=30000):
     tfidf = transformer.fit_transform(counts)
     return tfidf
 
-#############revised part 
+#############
+##############revised part 
 def cln(data):
     cln_text =[]
     for sentence in data["text"]:
         cln_text.append(re.sub("[!&\'()*+,-./:;<=>?@[\\]^_`{|}~]", "", sentence))
-    data["cln_text"] = cln_text
+    data["no_punc_text"] = cln_text
     return data
 
 def rm_stopwords(data):
     data_cl = cln(data)
     filtered_sentence=[]
-    for sentence in data_cl["cln_text"]:
+    for sentence in data_cl["no_punc_text"]:
         word_tokens = word_tokenize(sentence) 
         sentence_tem = [w for w in word_tokens if not w in stop_words]
         filtered_sentence.append(sentence_tem)
-    data["cln_split_text"] = filtered_sentence
+    data["cln_text"] = filtered_sentence
     clc_sentence = []
-    for sentence in data["cln_split_text"]:
+    for sentence in data["cln_text"]:
         clc_sentence.append(" ".join(sentence))
-    data["cln_split_text"]=clc_sentence
+    data["cln_text"]=clc_sentence
     return data
 
 
