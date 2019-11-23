@@ -12,11 +12,11 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer
 import mglearn
 
-
+#### let's standadize the extraction process for our project here
 train_data = dl.load_clean_data('train')
-x_train, y_train = (train_data[0], train_data[-1])
-test_data = dl.load_clean_data('test')
-x_test, y_test = (test_data[0], test_data[-1])
+x_train, y_train = (train_data[0], train_data[-1]) 
+x_train_cl = cl.rm_stopwords(x_train)  #### use x_train_cl["cln_split_text"] to call the cleaned review
+
 
 
 def multinomial_bayes():
