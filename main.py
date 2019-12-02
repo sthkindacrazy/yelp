@@ -19,13 +19,13 @@ x_tem, y_tem = (train_data[0], train_data[-1])
 
 #remove all the punctuations and stop words (special repeated char like "``" still remains for now)
 x_train_cl = cl.rm_stopwords(x_tem)    # use x_train_cl["cln_text"] to call the cleaned review
-x_train, x_test,y_train, y_test = train_test_split(x_train_cl,y_tem,test_size=0.2,random_state=42,shuffle=True) # we can swtich "42" to "RandomState" later 
+#x_train, x_test,y_train, y_test = train_test_split(x_train_cl,y_tem,test_size=0.2,random_state=42,shuffle=True) # we can swtich "42" to "RandomState" later
 
 #####
 #####Just keep this part of the code above same for all three of us to maintain an identical initialization of review text
 
 def multinomial_bayes():
-    x_train_ref_org, x_test_ref_org, y_train_ref, y_test_ref = train_test_split(x_train, y_train, test_size=0.2, random_state=42)
+    x_train_ref_org, x_test_ref_org, y_train_ref, y_test_ref = train_test_split(x_train_cl,y_tem,test_size=0.2,random_state=42,shuffle=True)
     num_feature = []
     acc = []
     for i in range(1000, 10000, 1000):
