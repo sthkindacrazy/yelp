@@ -30,7 +30,7 @@ def clean_text(phrase):
 
 
 def cleaning(data):
-    data.dropna()
+    data = data.dropna()
     tqdm.pandas(desc="Stemming...")
     data['text'] = data['text'].progress_apply(stem_phrase)
     data['text'] = data['text'].progress_apply(clean_text)
