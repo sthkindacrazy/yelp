@@ -71,9 +71,9 @@ def multinomial_bayes():
         #print(i, score)
         tf_idf_acc.append(score)
 
-    plt.plot(bin_acc, acc)
-    plt.plot(word_count_acc, acc)
-    plt.plot(tf_idf_acc, acc)
+    plt.plot(acc, bin_acc)
+    plt.plot(acc, word_count_acc)
+    plt.plot(acc, tf_idf_acc)
     plt.xlabel('number of words')
     plt.ylabel('classification accuracy')
     plt.show()
