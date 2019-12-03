@@ -41,17 +41,25 @@ def cleaning(data):
 # easy one hot encoding
 def phrase_one_hot_encode(train_data, test_data, num=30000):
     vectorizer = CountVectorizer(max_features=num, min_df=1, ngram_range=(1, 2), binary=True)
-    vectorizer.fit(train_data['text'])
-    return vectorizer.transform(train_data['text']), vectorizer.transform(test_data['text'])
+    vectorizer.fit(train_data['cln_text'])
+    return vectorizer.transform(train_data['cln_text']), vectorizer.transform(test_data['cln_text'])
 
 
-def phrase_tf_idf_encode(data, num=30000):
+def non_bin_phrase_one_hot_encode(train_data, test_data, num=30000):
+    vectorizer = CountVectorizer(max_features=num, min_df=1, ngram_range=(1, 2), binary=False)
+    vectorizer.fit(train_data['cln_text'])
+    return vectorizer.transform(train_data['cln_text']), vectorizer.transform(test_data['cln_text'])
+
+
+def phrase_tf_idf_encode(train_data, test_data, num=30000):
     vectorizer = CountVectorizer(max_features=num, min_df=1, ngram_range=(1, 2))
     transformer = TfidfTransformer(smooth_idf=False)
-    vectorizer.fit(data['text'])
-    counts = vectorizer.transform(data['text'])
-    tfidf = transformer.fit_transform(counts)
-    return tfidf
+    vectorizer.fit(train_data['cln_text'])
+    train_counts = vectorizer.transform(train_data['cln_text'])
+    test_counts = vectorizer.transform(test_data['cln_text'])
+    tfidf_train = transformer.fit_transform(train_counts)
+    tfidf_test = transformer.fit_transform(test_counts)
+    return tfidf_train, tfidf_test
 
 #############
 ##############revised part 

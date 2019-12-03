@@ -27,8 +27,11 @@ x_train_cl = cl.rm_stopwords(x_tem)    # use x_train_cl["cln_text"] to call the 
 def multinomial_bayes():
     x_train_ref_org, x_test_ref_org, y_train_ref, y_test_ref = train_test_split(x_train_cl,y_tem,test_size=0.2,random_state=42,shuffle=True)
     num_feature = []
+    bin_acc = []
+    word_count_acc = []
+    tf_idf_acc = []
     acc = []
-    for i in range(1000, 10000, 1000):
+    for i in range(10000, 31000, 1000):
         mnb = MultinomialNB()
         x_train_ref = x_train_ref_org
         x_test_ref = x_test_ref_org
@@ -38,10 +41,39 @@ def multinomial_bayes():
         mnb.fit(x_train_ref, y_train_ref)
         predmnb = mnb.predict(x_test_ref)
         score = round(accuracy_score(y_test_ref, predmnb) * 100, 2)
-        print(i, score)
-        num_feature.append(i)
-        acc.append(score)
-    plt.plot(num_feature, acc)
+        #print(i, score)
+        bin_acc.append(score)
+        acc.append(i)
+
+    for i in range(10000, 31000, 1000):
+        mnb = MultinomialNB()
+        x_train_ref = x_train_ref_org
+        x_test_ref = x_test_ref_org
+        # x_train_ref = cl.phrase_tf_idf_encode(x_train_ref, i)
+        # x_test_ref = cl.phrase_tf_idf_encode(x_test_ref, i)
+        x_train_ref, x_test_ref = cl.non_bin_phrase_one_hot_encode(x_train_ref, x_test_ref, i)
+        mnb.fit(x_train_ref, y_train_ref)
+        predmnb = mnb.predict(x_test_ref)
+        score = round(accuracy_score(y_test_ref, predmnb) * 100, 2)
+        #print(i, score)
+        word_count_acc.append(score)
+
+    for i in range(10000, 31000, 1000):
+        mnb = MultinomialNB()
+        x_train_ref = x_train_ref_org
+        x_test_ref = x_test_ref_org
+        # x_train_ref = cl.phrase_tf_idf_encode(x_train_ref, i)
+        # x_test_ref = cl.phrase_tf_idf_encode(x_test_ref, i)
+        x_train_ref, x_test_ref = cl.phrase_tf_idf_encode(x_train_ref, x_test_ref, i)
+        mnb.fit(x_train_ref, y_train_ref)
+        predmnb = mnb.predict(x_test_ref)
+        score = round(accuracy_score(y_test_ref, predmnb) * 100, 2)
+        #print(i, score)
+        tf_idf_acc.append(score)
+
+    plt.plot(bin_acc, acc)
+    plt.plot(word_count_acc, acc)
+    plt.plot(tf_idf_acc, acc)
     plt.xlabel('number of words')
     plt.ylabel('classification accuracy')
     plt.show()
