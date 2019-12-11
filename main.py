@@ -14,13 +14,6 @@ from sklearn.model_selection import train_test_split
 import mglearn
 import Ensemble_of_logistic_regression as ELR
 
-#Ensemble of logistic regression:
-ELR.top_freq_main_()
-ELR._main_onehot_()
-
-
-
-
 
 # load the data in just the same procesude as before
 train_data = dl.load_clean_data('train')
